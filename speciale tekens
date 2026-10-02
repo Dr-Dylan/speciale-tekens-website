@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Speciale Tekens</title>
+
+<style>
+    :root {
+        --bg: #f5f5f7;
+        --card: rgba(255,255,255,0.85);
+        --text: #1d1d1f;
+        --secondary: #6e6e73;
+        --border: rgba(0,0,0,0.08);
+        --blue: #007aff;
+        --blue-light: #e8f2ff;
+        --shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    body.dark {
+        --bg: #101012;
+        --card: rgba(30,30,32,0.9);
+        --text: #f5f5f7;
+        --secondary: #a1a1a6;
+        --border: rgba(255,255,255,0.1);
+        --blue: #0a84ff;
+        --blue-light: #15263d;
+        --shadow: 0 8px 30px rgba(0,0,0,0.35);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            "SF Pro Display",
+            "Segoe UI",
+            sans-serif;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+        padding: 55px 20px 35px;
+        text-align: center;
+        background:
+            radial-gradient(circle at 50% 0%, rgba(0,122,255,0.18), transparent 45%);
+    }
+
+    .logo {
+        font-size: 55px;
+        margin-bottom: 8px;
+    }
+
+    h1 {
+        font-size: clamp(32px, 6vw, 55px);
+        margin: 0;
+        letter-spacing: -2px;
+    }
+
+    .subtitle {
+        color: var(--secondary);
+        font-size: 17px;
+        margin-top: 10px;
+    }
+
+    .topbar {
+        max-width: 1050px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .search-container {
+        position: relative;
+        margin: 5px auto 18px;
+    }
+
+    .search {
+        width: 100%;
+        padding: 17px 52px 17px 52px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        font-size: 17px;
+        outline: none;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(15px);
+    }
+
+    .search:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 4px rgba(0,122,255,0.12);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 18px;
+        top: 14px;
+        font-size: 23px;
+    }
+
+    .shortcut {
+        position: absolute;
+        right: 14px;
+        top: 12px;
+        padding: 6px 9px;
+        border-radius: 7px;
+        background: var(--blue-light);
+        color: var(--blue);
+        font-size: 12px;
+    }
+
+    .controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .categories {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        flex: 1;
+        scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar {
+        display: none;
+    }
+
+    .category {
+        white-space: nowrap;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        padding: 10px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    .category:hover {
+        transform: translateY(-1px);
+    }
+
+    .category.active {
+        background: var(--blue);
+        color: white;
+        border-color: var(--blue);
+    }
+
+    .theme-button {
+        flex-shrink: 0;
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .stats {
+        color: var(--secondary);
+        font-size: 14px;
+        margin: 5px 0 18px;
+    }
+
+    #results {
+        max-width: 1050px;
+        margin: 0 auto;
+        padding: 0 20px 60px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 16px;
+    }
+
+    .card {
+        position: relative;
+        overflow: hidden;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(15px);
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+
+    .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .symbol {
+        font-size: 58px;
+        height: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .category-label {
+        font-size: 11px;
+        color: var(--blue);
+        background: var(--blue-light);
+        padding: 5px 8px;
+        border-radius: 7px;
+        font-weight: 600;
+    }
+
+    .name {
+        font-size: 18px;
+        font-weight: 650;
+        margin-top: 12px;
+    }
+
+    .description {
+        color: var(--secondary);
+        font-size: 13px;
+        margin-top: 5px;
+        min-height: 32px;
+    }
+
+    .typing-box {
+        margin-top: 16px;
+        padding: 12px;
+        border-radius: 13px;
+        background: var(--blue-light);
+    }
+
+    .typing-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--blue);
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .typing {
+        font-size: 14px;
+        line-height: 1.45;
+        font-weight: 500;
+    }
+
+    .alternative {
+        margin-top: 9px;
+        font-size: 11px;
+        color: var(--secondary);
+    }
+
+    .empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 70px 20px;
+        color: var(--secondary);
+    }
+
+    .empty-icon {
+        font-size: 55px;
+        margin-bottom: 10px;
+    }
+
+    footer {
+        text-align: center;
+        color: var(--secondary);
+        padding: 20px;
+        font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+        header {
+            padding-top: 35px;
+        }
+
+        .shortcut {
+            display: none;
+        }
+
+        #results {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">✨</div>
+    <h1>Speciale Tekens</h1>
+    <div class="subtitle">
+        Een woordenboek voor tekens die je niet zomaar op je toetsenbord vindt.
+    </div>
+</header>
+
+<div class="topbar">
+
+    <div class="search-container">
+        <span class="search-icon">⌕</span>
+
+        <input
+            id="search"
+            class="search"
+            type="text"
+            placeholder="Zoek bijvoorbeeld: u met puntjes, euro, pijl..."
+            autocomplete="off"
+        >
+
+        <span class="shortcut">⌘ K</span>
+    </div>
+
+    <div class="controls">
+
+        <div class="categories">
+
+            <button class="category active"
+                onclick="filterCategory('Alles', this)">
+                Alles
+            </button>
+
+            <button class="category"
+                onclick="filterCategory('Letters', this)">
+                🔤 Letters
+            </button>
+
+            <button class="category"
+                onclick="filterCategory('Symbolen', this)">
+                ⭐ Symbolen
+            </button>
+
+            <button class="category"
+                onclick="filterCategory('Pijlen', this)">
+                ➡️ Pijlen
+            </button>
+
+            <button class="category"
+                onclick="filterCategory('Wiskunde', this)">
+                ∑ Wiskunde
+            </button>
+
+            <button class="category"
+                onclick="filterCategory('Valuta', this)">
+                💰 Valuta
+            </button>
+
+            <button class="category"
+                onclick="filterCategory('Muziek', this)">
+                🎵 Muziek
+            </button>
+
+            <button class="category"
+                onclick="filterCategory('Kaarten', this)">
+                🃏 Kaarten
+            </button>
+
+            <button class="category"
+                onclick="filterCategory('Schaken', this)">
+                ♟️ Schaken
+            </button>
+
+        </div>
+
+        <button class="theme-button" onclick="toggleDarkMode()" id="theme">
+            🌙
+        </button>
+
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+</div>
+
+<div id="results"></div>
+
+<footer>
+    Speciale Tekens Woordenboek • Gemaakt voor Mac 💻
+</footer>
+
+<script>
+
+const tekens = [
+
+/* =========================
+   LETTERS
+========================= */
+
+{char:"ä",name:"a met puntjes",description:"Trema op de a",typing:"⌥ Option + U, daarna A",category:"Letters"},
+{char:"ë",name:"e met puntjes",description:"Trema op de e",typing:"⌥ Option + U, daarna E",category:"Letters"},
+{char:"ï",name:"i met puntjes",description:"Trema op de i",typing:"⌥ Option + U, daarna I",category:"Letters"},
+{char:"ö",name:"o met puntjes",description:"Trema op de o",typing:"⌥ Option + U, daarna O",category:"Letters"},
+{char:"ü",name:"u met puntjes",description:"Trema op de u",typing:"⌥ Option + U, daarna U",category:"Letters"},
+{char:"ÿ",name:"y met puntjes",description:"Trema op de y",typing:"⌥ Option + U, daarna Y",category:"Letters"},
+
+{char:"á",name:"a met accent aigu",description:"Schuin accent naar rechts",typing:"⌥ Option + E, daarna A",category:"Letters"},
+{char:"é",name:"e met accent aigu",description:"Schuin accent naar rechts",typing:"⌥ Option + E, daarna E",category:"Letters"},
+{char:"í",name:"i met accent aigu",description:"Schuin accent naar rechts",typing:"⌥ Option + E, daarna I",category:"Letters"},
+{char:"ó",name:"o met accent aigu",description:"Schuin accent naar rechts",typing:"⌥ Option + E, daarna O",category:"Letters"},
+{char:"ú",name:"u met accent aigu",description:"Schuin accent naar rechts",typing:"⌥ Option + E, daarna U",category:"Letters"},
+
+{char:"à",name:"a met accent grave",description:"Schuin accent naar links",typing:"⌥ Option + `, daarna A",category:"Letters"},
+{char:"è",name:"e met accent grave",description:"Schuin accent naar links",typing:"⌥ Option + `, daarna E",category:"Letters"},
+{char:"ì",name:"i met accent grave",description:"Schuin accent naar links",typing:"⌥ Option + `, daarna I",category:"Letters"},
+{char:"ò",name:"o met accent grave",description:"Schuin accent naar links",typing:"⌥ Option + `, daarna O",category:"Letters"},
+{char:"ù",name:"u met accent grave",description:"Schuin accent naar links",typing:"⌥ Option + `, daarna U",category:"Letters"},
+
+{char:"â",name:"a met circumflex",description:"Dakje op de a",typing:"⌥ Option + I, daarna A",category:"Letters"},
+{char:"ê",name:"e met circumflex",description:"Dakje op de e",typing:"⌥ Option + I, daarna E",category:"Letters"},
+{char:"î",name:"i met circumflex",description:"Dakje op de i",typing:"⌥ Option + I, daarna I",category:"Letters"},
+{char:"ô",name:"o met circumflex",description:"Dakje op de o",typing:"⌥ Option + I, daarna O",category:"Letters"},
+{char:"û",name:"u met circumflex",description:"Dakje op de u",typing:"⌥ Option + I, daarna U",category:"Letters"},
+
+{char:"ã",name:"a met tilde",description:"Golfje boven de a",typing:"⌥ Option + N, daarna A",category:"Letters"},
+{char:"ñ",name:"n met tilde",description:"Golfje boven de n",typing:"⌥ Option + N, daarna N",category:"Letters"},
+{char:"õ",name:"o met tilde",description:"Golfje boven de o",typing:"⌥ Option + N, daarna O",category:"Letters"},
+
+{char:"å",name:"a met ring",description:"Rondje boven de a",typing:"⌥ Option + A",category:"Letters"},
+{char:"ç",name:"c met cedille",description:"C met een haakje",typing:"⌥ Option + C",category:"Letters"},
+{char:"ø",name:"o met streep",description:"Scandinavische o",typing:"⌥ Option + O",category:"Letters"},
+{char:"æ",name:"ae-ligatuur",description:"A en e gecombineerd",typing:"⌥ Option + '",category:"Letters"},
+{char:"ß",name:"scharfe S",description:"Duitse scherpe s",typing:"⌥ Option + S",category:"Letters"},
+
+{char:"Ä",name:"A met puntjes",description:"Hoofdletter met trema",typing:"⌥ Option + U, daarna ⇧ Shift + A",category:"Letters"},
+{char:"Ë",name:"E met puntjes",description:"Hoofdletter met trema",typing:"⌥ Option + U, daarna ⇧ Shift + E",category:"Letters"},
+{char:"Ï",name:"I met puntjes",description:"Hoofdletter met trema",typing:"⌥ Option + U, daarna ⇧ Shift + I",category:"Letters"},
+{char:"Ö",name:"O met puntjes",description:"Hoofdletter met trema",typing:"⌥ Option + U, daarna ⇧ Shift + O",category:"Letters"},
+{char:"Ü",name:"U met puntjes",description:"Hoofdletter met trema",typing:"⌥ Option + U, daarna ⇧ Shift + U",category:"Letters"},
+{char:"É",name:"E met accent",description:"Hoofdletter met accent aigu",typing:"⌥ Option + E, daarna ⇧ Shift + E",category:"Letters"},
+{char:"Ñ",name:"N met tilde",description:"Hoofdletter met tilde",typing:"⌥ Option + N, daarna ⇧ Shift + N",category:"Letters"},
+{char:"Ç",name:"C met cedille",description:"Hoofdletter met cedille",typing:"⌥ Option + C, daarna ⇧ Shift + C",category:"Letters"},
+
+/* =========================
+   SYMBOLEN
+========================= */
+
+{char:"©",name:"Copyright",description:"Copyrightsymbool",typing:"⌥ Option + G",category:"Symbolen"},
+{char:"®",name:"Registered",description:"Geregistreerd handelsmerk",typing:"⌥ Option + R",category:"Symbolen"},
+{char:"™",name:"Trademark",description:"Handelsmerk",typing:"⌥ Option + 2",category:"Symbolen"},
+{char:"°",name:"Graden",description:"Graden-symbool",typing:"⌥ Option + ⇧ Shift + 8",category:"Symbolen"},
+{char:"§",name:"Paragraaf",description:"Paragraafteken",typing:"⌥ Option + 6",category:"Symbolen"},
+{char:"¶",name:"Pilcrow",description:"Alineateken",typing:"⌥ Option + 7",category:"Symbolen"},
+{char:"†",name:"Dolk",description:"Dolk-symbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'dolk'",category:"Symbolen"},
+{char:"‡",name:"Dubbele dolk",description:"Dubbel dolksymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'dubbele dolk'",category:"Symbolen"},
+{char:"•",name:"Bullet",description:"Rond opsommingsteken",typing:"⌥ Option + 8",category:"Symbolen"},
+{char:"…",name:"Beletselteken",description:"Drie puntjes als één teken",typing:"⌥ Option + ;",category:"Symbolen"},
+{char:"¿",name:"Omgekeerd vraagteken",description:"Spaans vraagteken",typing:"⌥ Option + ⇧ Shift + ?",category:"Symbolen"},
+{char:"¡",name:"Omgekeerd uitroepteken",description:"Spaans uitroepteken",typing:"⌥ Option + 1",category:"Symbolen"},
+{char:"¬",name:"Not-teken",description:"Logisch niet",typing:"⌥ Option + L",category:"Symbolen"},
+{char:"÷",name:"Deelteken",description:"Delen",typing:"⌥ Option + /",category:"Symbolen"},
+{char:"µ",name:"Microteken",description:"Micro",typing:"⌥ Option + M",category:"Symbolen"},
+
+/* =========================
+   PIJLEN
+========================= */
+
+{char:"←",name:"Pijl links",description:"Pijl naar links",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl links'",category:"Pijlen"},
+{char:"→",name:"Pijl rechts",description:"Pijl naar rechts",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl rechts'",category:"Pijlen"},
+{char:"↑",name:"Pijl omhoog",description:"Pijl naar boven",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl omhoog'",category:"Pijlen"},
+{char:"↓",name:"Pijl omlaag",description:"Pijl naar beneden",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl omlaag'",category:"Pijlen"},
+{char:"↔",name:"Pijl links-rechts",description:"Pijl in twee richtingen",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl links rechts'",category:"Pijlen"},
+{char:"↕",name:"Pijl omhoog-omlaag",description:"Verticale dubbele pijl",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl omhoog omlaag'",category:"Pijlen"},
+{char:"↗",name:"Pijl rechtsboven",description:"Diagonale pijl",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl rechtsboven'",category:"Pijlen"},
+{char:"↘",name:"Pijl rechtsonder",description:"Diagonale pijl",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl rechtsonder'",category:"Pijlen"},
+{char:"↙",name:"Pijl linksonder",description:"Diagonale pijl",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl linksonder'",category:"Pijlen"},
+{char:"↖",name:"Pijl linksboven",description:"Diagonale pijl",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pijl linksboven'",category:"Pijlen"},
+{char:"⇒",name:"Dubbele pijl rechts",description:"Dubbele pijl",typing:"⌃ Control + ⌘ Command + spatie → zoek 'dubbele pijl rechts'",category:"Pijlen"},
+{char:"⇐",name:"Dubbele pijl links",description:"Dubbele pijl",typing:"⌃ Control + ⌘ Command + spatie → zoek 'dubbele pijl links'",category:"Pijlen"},
+{char:"⇔",name:"Dubbele pijl beide kanten",description:"Dubbele pijl in twee richtingen",typing:"⌃ Control + ⌘ Command + spatie → zoek 'dubbele pijl'",category:"Pijlen"},
+
+/* =========================
+   WISKUNDE
+========================= */
+
+{char:"±",name:"Plus of min",description:"Plus-minus",typing:"⌥ Option + ⇧ Shift + =",category:"Wiskunde"},
+{char:"×",name:"Keer",description:"Vermenigvuldiging",typing:"⌃ Control + ⌘ Command + spatie → zoek 'vermenigvuldiging'",category:"Wiskunde"},
+{char:"÷",name:"Delen",description:"Deelteken",typing:"⌥ Option + /",category:"Wiskunde"},
+{char:"≠",name:"Niet gelijk",description:"Ongelijkheid",typing:"⌃ Control + ⌘ Command + spatie → zoek 'niet gelijk'",category:"Wiskunde"},
+{char:"≈",name:"Ongeveer gelijk",description:"Benadering",typing:"⌃ Control + ⌘ Command + spatie → zoek 'ongeveer gelijk'",category:"Wiskunde"},
+{char:"≤",name:"Kleiner of gelijk",description:"Kleiner-dan-of-gelijk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'kleiner gelijk'",category:"Wiskunde"},
+{char:"≥",name:"Groter of gelijk",description:"Groter-dan-of-gelijk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'groter gelijk'",category:"Wiskunde"},
+{char:"∞",name:"Oneindig",description:"Oneindigheid",typing:"⌃ Control + ⌘ Command + spatie → zoek 'oneindig'",category:"Wiskunde"},
+{char:"√",name:"Wortel",description:"Vierkantswortel",typing:"⌃ Control + ⌘ Command + spatie → zoek 'vierkantswortel'",category:"Wiskunde"},
+{char:"∛",name:"Derde machtswortel",description:"Kubieke wortel",typing:"⌃ Control + ⌘ Command + spatie → zoek 'kubieke wortel'",category:"Wiskunde"},
+{char:"π",name:"Pi",description:"Wiskundige constante",typing:"⌃ Control + ⌘ Command + spatie → zoek 'pi'",category:"Wiskunde"},
+{char:"Σ",name:"Sigma",description:"Somteken",typing:"⌃ Control + ⌘ Command + spatie → zoek 'sigma'",category:"Wiskunde"},
+{char:"Δ",name:"Delta",description:"Griekse hoofdletter delta",typing:"⌃ Control + ⌘ Command + spatie → zoek 'delta'",category:"Wiskunde"},
+{char:"Ω",name:"Omega",description:"Griekse hoofdletter omega",typing:"⌃ Control + ⌘ Command + spatie → zoek 'omega'",category:"Wiskunde"},
+{char:"α",name:"Alpha",description:"Griekse letter alpha",typing:"⌃ Control + ⌘ Command + spatie → zoek 'alpha'",category:"Wiskunde"},
+{char:"β",name:"Beta",description:"Griekse letter beta",typing:"⌃ Control + ⌘ Command + spatie → zoek 'beta'",category:"Wiskunde"},
+{char:"γ",name:"Gamma",description:"Griekse letter gamma",typing:"⌃ Control + ⌘ Command + spatie → zoek 'gamma'",category:"Wiskunde"},
+{char:"θ",name:"Theta",description:"Griekse letter theta",typing:"⌃ Control + ⌘ Command + spatie → zoek 'theta'",category:"Wiskunde"},
+{char:"λ",name:"Lambda",description:"Griekse letter lambda",typing:"⌃ Control + ⌘ Command + spatie → zoek 'lambda'",category:"Wiskunde"},
+{char:"μ",name:"Mu",description:"Griekse letter mu",typing:"⌃ Control + ⌘ Command + spatie → zoek 'mu'",category:"Wiskunde"},
+
+/* =========================
+   VALUTA
+========================= */
+
+{char:"€",name:"Euro",description:"Euroteken",typing:"⌥ Option + E",category:"Valuta"},
+{char:"£",name:"Britse pond",description:"Pond sterling",typing:"⌥ Option + 3",category:"Valuta"},
+{char:"¥",name:"Yen / Yuan",description:"Japanse yen / Chinese yuan",typing:"⌥ Option + Y",category:"Valuta"},
+{char:"¢",name:"Cent",description:"Centteken",typing:"⌥ Option + 4",category:"Valuta"},
+{char:"₩",name:"Won",description:"Zuid-Koreaanse won",typing:"⌃ Control + ⌘ Command + spatie → zoek 'won'",category:"Valuta"},
+{char:"₹",name:"Roepie",description:"Indiase roepie",typing:"⌃ Control + ⌘ Command + spatie → zoek 'roepie'",category:"Valuta"},
+{char:"₽",name:"Roebel",description:"Russische roebel",typing:"⌃ Control + ⌘ Command + spatie → zoek 'roebel'",category:"Valuta"},
+{char:"₺",name:"Turkse lira",description:"Turkse lira",typing:"⌃ Control + ⌘ Command + spatie → zoek 'lira'",category:"Valuta"},
+{char:"₿",name:"Bitcoin",description:"Bitcoin-symbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'bitcoin'",category:"Valuta"},
+
+/* =========================
+   MUZIEK
+========================= */
+
+{char:"♪",name:"Achtste noot",description:"Muzieknoot",typing:"⌃ Control + ⌘ Command + spatie → zoek 'muzieknoot'",category:"Muziek"},
+{char:"♫",name:"Twee achtste noten",description:"Twee muzieknoten",typing:"⌃ Control + ⌘ Command + spatie → zoek 'muzieknoten'",category:"Muziek"},
+{char:"♩",name:"Kwartnoot",description:"Muzieknoot",typing:"⌃ Control + ⌘ Command + spatie → zoek 'kwartnoot'",category:"Muziek"},
+{char:"♬",name:"Zestiende noten",description:"Twee verbonden noten",typing:"⌃ Control + ⌘ Command + spatie → zoek 'muzieknoten'",category:"Muziek"},
+{char:"♭",name:"Mol",description:"Verlaagt een noot",typing:"⌃ Control + ⌘ Command + spatie → zoek 'mol'",category:"Muziek"},
+{char:"♯",name:"Kruis",description:"Verhoogt een noot",typing:"⌃ Control + ⌘ Command + spatie → zoek 'kruis'",category:"Muziek"},
+{char:"♮",name:"Herstellingsteken",description:"Maakt een verhoging of verlaging ongedaan",typing:"⌃ Control + ⌘ Command + spatie → zoek 'herstellingsteken'",category:"Muziek"},
+
+/* =========================
+   KAARTEN
+========================= */
+
+{char:"♠",name:"Schoppen",description:"Kaartsymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'schoppen'",category:"Kaarten"},
+{char:"♥",name:"Harten",description:"Kaartsymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'harten'",category:"Kaarten"},
+{char:"♦",name:"Ruiten",description:"Kaartsymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'ruiten'",category:"Kaarten"},
+{char:"♣",name:"Klaveren",description:"Kaartsymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'klaveren'",category:"Kaarten"},
+{char:"♡",name:"Leeg hart",description:"Open hart",typing:"⌃ Control + ⌘ Command + spatie → zoek 'open hart'",category:"Kaarten"},
+{char:"♢",name:"Lege ruit",description:"Open ruit",typing:"⌃ Control + ⌘ Command + spatie → zoek 'lege ruit'",category:"Kaarten"},
+
+/* =========================
+   SCHAKEN
+========================= */
+
+{char:"♔",name:"Witte koning",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'witte koning'",category:"Schaken"},
+{char:"♕",name:"Witte dame",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'witte dame'",category:"Schaken"},
+{char:"♖",name:"Witte toren",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'witte toren'",category:"Schaken"},
+{char:"♗",name:"Witte loper",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'witte loper'",category:"Schaken"},
+{char:"♘",name:"Wit paard",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'wit paard'",category:"Schaken"},
+{char:"♙",name:"Witte pion",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'witte pion'",category:"Schaken"},
+
+{char:"♚",name:"Zwarte koning",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'zwarte koning'",category:"Schaken"},
+{char:"♛",name:"Zwarte dame",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'zwarte dame'",category:"Schaken"},
+{char:"♜",name:"Zwarte toren",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'zwarte toren'",category:"Schaken"},
+{char:"♝",name:"Zwarte loper",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'zwarte loper'",category:"Schaken"},
+{char:"♞",name:"Zwart paard",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'zwart paard'",category:"Schaken"},
+{char:"♟",name:"Zwarte pion",description:"Schaakstuk",typing:"⌃ Control + ⌘ Command + spatie → zoek 'zwarte pion'",category:"Schaken"},
+
+/* =========================
+   EXTRA SYMBOLEN
+========================= */
+
+{char:"★",name:"Gevulde ster",description:"Ster",typing:"⌃ Control + ⌘ Command + spatie → zoek 'ster'",category:"Symbolen"},
+{char:"☆",name:"Lege ster",description:"Open ster",typing:"⌃ Control + ⌘ Command + spatie → zoek 'ster'",category:"Symbolen"},
+{char:"✓",name:"Vinkje",description:"Goed / voltooid",typing:"⌃ Control + ⌘ Command + spatie → zoek 'vinkje'",category:"Symbolen"},
+{char:"✔",name:"Dik vinkje",description:"Dik vinkje",typing:"⌃ Control + ⌘ Command + spatie → zoek 'vinkje'",category:"Symbolen"},
+{char:"✕",name:"Kruis",description:"Kruisteken",typing:"⌃ Control + ⌘ Command + spatie → zoek 'kruis'",category:"Symbolen"},
+{char:"✖",name:"Dik kruis",description:"Dik kruisteken",typing:"⌃ Control + ⌘ Command + spatie → zoek 'kruis'",category:"Symbolen"},
+{char:"☀",name:"Zon",description:"Zonsymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'zon'",category:"Symbolen"},
+{char:"☁",name:"Wolk",description:"Wolksymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'wolk'",category:"Symbolen"},
+{char:"☂",name:"Paraplu",description:"Paraplusymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'paraplu'",category:"Symbolen"},
+{char:"☃",name:"Sneeuwpop",description:"Sneeuwpop",typing:"⌃ Control + ⌘ Command + spatie → zoek 'sneeuwpop'",category:"Symbolen"},
+{char:"❄",name:"Sneeuwvlok",description:"Sneeuwvlok",typing:"⌃ Control + ⌘ Command + spatie → zoek 'sneeuwvlok'",category:"Symbolen"},
+{char:"⚡",name:"Bliksem",description:"Bliksemsymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'bliksem'",category:"Symbolen"},
+{char:"☮",name:"Vredesteken",description:"Peace-symbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'vrede'",category:"Symbolen"},
+{char:"☯",name:"Yin yang",description:"Yin-yangsymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'yin yang'",category:"Symbolen"},
+{char:"☢",name:"Radioactief",description:"Waarschuwingssymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'radioactief'",category:"Symbolen"},
+{char:"☣",name:"Biologisch gevaar",description:"Biologisch gevarensymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'biologisch'",category:"Symbolen"},
+{char:"♻",name:"Recyclen",description:"Recyclingsymbool",typing:"⌃ Control + ⌘ Command + spatie → zoek 'recyclen'",category:"Symbolen"}
+
+];
+
+let huidigeCategorie = "Alles";
+
+function toonTekens() {
+
+    const zoekterm =
+        document.getElementById("search").value.toLowerCase().trim();
+
+    const resultaten = tekens.filter(item => {
+
+        const tekst =
+            (item.name + " " +
+             item.description + " " +
+             item.char + " " +
+             item.typing).toLowerCase();
+
+        const zoekMatch = tekst.includes(zoekterm);
+
+        const categorieMatch =
+            huidigeCategorie === "Alles" ||
+            item.category === huidigeCategorie;
+
+        return zoekMatch && categorieMatch;
+    });
+
+    const container = document.getElementById("results");
+
+    container.innerHTML = "";
+
+    document.getElementById("stats").textContent =
+        `${resultaten.length} van ${tekens.length} tekens`;
+
+    if (resultaten.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">🔍</div>
+                <h2>Niets gevonden</h2>
+                <p>Probeer een andere zoekterm.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    resultaten.forEach(item => {
+
+        const card = document.createElement("article");
+
+        card.className = "card";
+
+        card.innerHTML = `
+
+            <div class="card-top">
+
+                <div class="symbol">
+                    ${item.char}
+                </div>
+
+                <div class="category-label">
+                    ${item.category}
+                </div>
+
+            </div>
+
+            <div class="name">
+                ${item.name}
+            </div>
+
+            <div class="description">
+                ${item.description}
+            </div>
+
+            <div class="typing-box">
+
+                <div class="typing-title">
+                    ⌨️ Zo typ je het op Mac
+                </div>
+
+                <div class="typing">
+                    ${item.typing}
+                </div>
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+function filterCategory(category, button) {
+
+    huidigeCategorie = category;
+
+    document
+        .querySelectorAll(".category")
+        .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    toonTekens();
+}
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    document.getElementById("theme").textContent =
+        dark ? "☀️" : "🌙";
+
+    localStorage.setItem("darkMode", dark);
+}
+
+/* Dark mode onthouden */
+
+if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    document.getElementById("theme").textContent = "☀️";
+}
+
+/* Zoekfunctie */
+
+document
+    .getElementById("search")
+    .addEventListener("input", toonTekens);
+
+/* ⌘ K = zoekbalk openen */
+
+document.addEventListener("keydown", function(event) {
+
+    if ((event.metaKey || event.ctrlKey) &&
+        event.key.toLowerCase() === "k") {
+
+        event.preventDefault();
+
+        document.getElementById("search").focus();
+    }
+
+    if (event.key === "Escape") {
+
+        document.getElementById("search").value = "";
+
+        document.getElementById("search").blur();
+
+        toonTekens();
+    }
+});
+
+/* Start */
+
+toonTekens();
+
+</script>
+
+</body>
+</html>
